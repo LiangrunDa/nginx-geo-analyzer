@@ -47,6 +47,14 @@ volumes:
 docker compose up
 ```
 
+Note: If you want to rebuild the image locally, you can uncomment the following lines and comment `image` line in the `docker-compose.yml` file:
+
+```yaml
+    build:
+      context: .
+      dockerfile: Dockerfile
+```
+
 ### Configure Grafana Datasource
 
 You can now access Grafana at `http://localhost:3000` and configure the InfluxDB datasource. The default username and password for Grafana is `admin`.

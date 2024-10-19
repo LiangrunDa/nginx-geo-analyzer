@@ -9,23 +9,26 @@ services:
     ports:
       - "8086:8086"
 
-  nginx-geo-analyzer:
-    image: liangrunda/nginx-geo-analyzer:latest
-    volumes:
-      - ./geodb:/app/geodb
-      - /opt/homebrew/Cellar/nginx/1.27.2/log:/var/log/nginx
-    environment:
-      - INFLUX_HOST=influxdb
-      - LOG_LEVEL=DEBUG
-    depends_on:
-      - influxdb
-
   grafana:
     image: grafana/grafana:11.2.2
     volumes:
       - grafana-data:/var/lib/grafana
     ports:
       - "3000:3000"
+    depends_on:
+      - influxdb
+
+  nginx-geo-analyzer:
+    image: liangrunda/nginx-geo-analyzer:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    volumes:
+      - ./geodb:/app/geodb
+      - /var/log/nginx:/var/log/nginx
+    environment:
+      - INFLUX_HOST=influxdb
+      - LOG_LEVEL=DEBUG
     depends_on:
       - influxdb
 
