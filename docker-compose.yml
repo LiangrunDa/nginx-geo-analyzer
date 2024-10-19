@@ -13,7 +13,7 @@ services:
     image: liangrunda/nginx-geo-analyzer:latest
     volumes:
       - ./geodb:/app/geodb
-      - /var/log/nginx:/var/log/nginx
+      - /opt/homebrew/Cellar/nginx/1.27.2/log:/var/log/nginx
     environment:
       - INFLUX_HOST=influxdb
       - LOG_LEVEL=DEBUG

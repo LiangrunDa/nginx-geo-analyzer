@@ -48,7 +48,5 @@ if __name__ == "__main__":
     geoip_srv = GeoIPService(config['geoip2_db'])
     geoip_srv.load_database()
     logger.info(f"Successfully loaded GeoIP2 database")
-    geoip_srv.lookup('104.16.28.15')
-    #
-    # nginx_log_analyzer = NginxLogAnalyzer(config['nginx_log'], geoip_srv, client)
-    # nginx_log_analyzer.start()
+    nginx_log_analyzer = NginxLogAnalyzer(config['nginx_log'], geoip_srv, client)
+    nginx_log_analyzer.start()
