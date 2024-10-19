@@ -2,6 +2,8 @@
 
 A non-intrusive Nginx log analyzer with geographical insights.
 
+![Overview](./figs/overview.png)
+
 ## Overview
 
 This project provides a solution for analyzing Nginx access logs with geographical information without requiring modifications to your Nginx configuration. It draws inspiration from [geoip2influx](https://github.com/GilbN/geoip2influx) for dashboard design but offers a key advantage: it doesn't require the installation of additional Nginx modules like [ngx_http_geoip2_module](https://github.com/leev/ngx_http_geoip2_module). 
@@ -46,6 +48,8 @@ docker compose up
 ```
 
 ### Configure Grafana Datasource
+
+You can now access Grafana at `http://localhost:3000` and configure the InfluxDB datasource. The default username and password for Grafana is `admin`.
 
 Please use `http://influxdb:8086` as the URL and leave the rest of the fields empty.
 
