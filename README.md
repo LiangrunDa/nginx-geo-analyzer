@@ -16,7 +16,54 @@ Additionally, we provide an example Grafana dashboard. Of course, you can design
 - Compatible with existing Nginx setups
 - Example Grafana dashboard included
 
-## Prerequisites
+## Option 1: Use Docker Compose
+
+If you don't have InfluxDB and Grafana, you can use Docker Compose to start them automatically.
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Nginx with default access log format, for example:
+```
+access_log  /var/log/nginx/access.log;
+```
+- GeoLite2-City.mmdb, provided by [MaxMind](https://www.maxmind.com/en/geolite2/signup).
+
+### Configure Docker Compose
+
+Edit the `docker-compose.yml` file to match your environment. You need to map the Nginx log file and the GeoLite2-City.mmdb file to the container. For example, assuming you place the GeoLite2-City.mmdb file in the `geodb` directory and your Nginx log file is in `/var/log/nginx/website1`, you can modify the `docker-compose.yml` file like this:
+
+```
+volumes:
+      - ./geodb:/app/geodb
+      - /var/log/nginx/website1:/var/log/nginx
+```
+
+### Run
+
+```bash
+docker compose up
+```
+
+### Configure Grafana Datasource
+
+Please use `http://influxdb:8086` as the URL and leave the rest of the fields empty.
+
+![influxdb-datasource1](./figs/influx-config1.png)
+
+The database name is `nginx-geo-analyzer`: 
+
+![inflxudb-datasource2](./figs/influx-config2.png)
+
+### Configure Grafana Dashboard
+
+Import the `dashboard.json` file in Grafana.
+
+## Option 2: Standalone python
+
+This option applies if you already have InfluxDB and Grafana installed. 
+
+### Prerequisites
 
 - Conda or Python 3.8
 - InfluxDB 1.8
@@ -27,8 +74,6 @@ Additionally, we provide an example Grafana dashboard. Of course, you can design
 ```
 access_log  /var/log/nginx/access.log;
 ```
-
-## Usage
 
 ### Setup environment
 
@@ -72,25 +117,10 @@ Then you can run the script by:
 python main.py
 ```
 
-### Grafana dashboard
+## Grafana dashboard
 
 You can use the [`dashboard.json`](https://github.com/liangrunda/nginx-geo-analyzer/blob/main/grafana/dashboard.json) file to import the dashboard into Grafana. 
 
-
-## Docker Usage
-
-If you prefer using Docker, you can run the container with the following command:
-
-```bash
-docker run -d \
-  -e INFLUX_HOST=<your_influx_host> \
-  -e INFLUX_PORT=<your_influx_port> \
-  -e INFLUX_USERNAME=<your_influx_username> \
-  -e INFLUX_PASSWORD=<your_influx_password> \
-  -v <your_geodb_dir>:/app/geodb \
-  -v <your_nginx_log_dir>:/var/log/nginx \
-  nginx-geo-analyzer
-```
 
 ## How It Works
 

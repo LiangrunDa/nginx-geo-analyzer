@@ -48,10 +48,8 @@ class GeoIPService:
                 'postal_code': response.postal.code,
                 'geohash': geohash.encode(response.location.latitude, response.location.longitude)
             }
-        except geoip2.errors.AddressNotFoundError:
-            return None
         except Exception as e:
-            raise Exception(f"Error looking up IP address: {e}")
+            return None
 
     def close(self):
         """
